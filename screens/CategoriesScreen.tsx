@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native'
 const CategoriesScreen = () => {
   return (
     <View>
-      <Text></Text>
+      <Text>Categories Screen</Text>
     </View>
   )
 }
