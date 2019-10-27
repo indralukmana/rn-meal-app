@@ -1,20 +1,32 @@
 import React from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, Button, FlatList } from 'react-native'
+import { CATEGORIES } from '../data/dummy-data'
 
-const CategoriesScreen = props => {
+const renderGridItem = itemData => {
   return (
-    <View>
-      <Text>Categories Screen</Text>
-      <Button
-        title='Go to meals'
-        onPress={() => {
-          props.navigation.navigate('CategoryMeals')
-        }}
-      />
+    <View style={styles.gridItem}>
+      <Text>{itemData.item.title}</Text>
     </View>
   )
 }
 
-const styles = StyleSheet.create({})
+const CategoriesScreen = props => {
+  return (
+    <FlatList
+      data={CATEGORIES}
+      renderItem={renderGridItem}
+      numColumns={2}
+      keyExtractor={item => item.id}
+    />
+  )
+}
+
+const styles = StyleSheet.create({
+  gridItem: {
+    flex: 1,
+    margin: 15,
+    height: 150,
+  },
+})
 
 export default CategoriesScreen
