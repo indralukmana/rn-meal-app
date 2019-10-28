@@ -10,7 +10,8 @@ import {
 import { CATEGORIES } from '../data/dummy-data'
 import Colors from '../constants/Colors'
 import CategoryGridTile from '../components/CategoryGridTile'
-
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import CustomHeaderButton from '../components/HeaderButton'
 const CategoriesScreen = props => {
   const renderGridItem = itemData => {
     return (
@@ -36,7 +37,19 @@ const CategoriesScreen = props => {
   )
 }
 
-CategoriesScreen.navigationOptions = {}
+CategoriesScreen.navigationOptions = navigationData => {
+  return {
+    headerLeft: (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title='Filters'
+          iconName='ios-menu'
+          onPress={() => navigationData.navigation.toggleDrawer()}
+        />
+      </HeaderButtons>
+    ),
+  }
+}
 
 const styles = StyleSheet.create({})
 
