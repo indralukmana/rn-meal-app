@@ -9,6 +9,7 @@ import MealDetailScreen from '../screens/MealDetailScreen'
 import Colors from '../constants/Colors'
 import FavoriteScreen from '../screens/FavoriteScreen'
 import { Ionicons } from '@expo/vector-icons'
+import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs'
 
 const MealNavigator = createStackNavigator(
   {
@@ -31,35 +32,38 @@ const MealNavigator = createStackNavigator(
   }
 )
 
-const MealsFavTabNavigator = createBottomTabNavigator(
-  {
-    Meals: {
-      screen: MealNavigator,
-      navigationOptions: {
-        tabBarIcon: tabInfo => {
-          return (
-            <Ionicons
-              name='ios-restaurant'
-              size={25}
-              color={tabInfo.tintColor}
-            />
-          )
-        },
+const mealsTabNavigationConfig = {
+  Meals: {
+    screen: MealNavigator,
+    navigationOptions: {
+      tabBarIcon: tabInfo => {
+        return (
+          <Ionicons name='ios-restaurant' size={25} color={tabInfo.tintColor} />
+        )
       },
-    },
-    Favorites: {
-      screen: FavoriteScreen,
-      navigationOptions: {
-        tabBarLabel: 'Favorites!',
-        tabBarIcon: tabInfo => {
-          return (
-            <Ionicons name='ios-star' size={25} color={tabInfo.tintColor} />
-          )
-        },
-      },
+      tabBarColor: Colors.primaryColor,
     },
   },
-  { tabBarOptions: { activeTintColor: Colors.accentColor } }
-)
+  Favorites: {
+    screen: FavoriteScreen,
+    navigationOptions: {
+      tabBarLabel: 'Favorites!',
+      tabBarIcon: tabInfo => {
+        return <Ionicons name='ios-star' size={25} color={tabInfo.tintColor} />
+      },
+      tabBarColor: Colors.accentColor,
+    },
+  },
+}
+
+const MealsFavTabNavigator =
+  Platform.OS === 'android'
+    ? createMaterialBottomTabNavigator(mealsTabNavigationConfig, {
+        activeColor: 'white',
+        shifting: true,
+      })
+    : createBottomTabNavigator(mealsTabNavigationConfig, {
+        tabBarOptions: { activeTintColor: Colors.accentColor },
+      })
 
 export default createAppContainer(MealsFavTabNavigator)
