@@ -3,7 +3,7 @@ import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createDrawerNavigator } from 'react-navigation-drawer'
-import { Platform } from 'react-native'
+import { Platform, Text } from 'react-native'
 import CategoriesScreen from '../screens/CategoriesScreen'
 import CategoryMealScreen from '../screens/CategoryMealScreen'
 import MealDetailScreen from '../screens/MealDetailScreen'
@@ -17,6 +17,9 @@ const defaultStackNavigationOptions = {
   headerTitle: 'Meal App',
   headerStyle: {
     backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
+  },
+  headerTitleStyle: {
+    fontFamily: 'open-sans-bold',
   },
   headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
 }
@@ -55,16 +58,27 @@ const mealsTabNavigationConfig = {
         )
       },
       tabBarColor: Colors.primaryColor,
+      tabBarLabel:
+        Platform.OS === 'android' ? (
+          <Text style={{ fontFamily: 'open-sans-bold' }}>Meals</Text>
+        ) : (
+          'Meals'
+        ),
     },
   },
   Favorites: {
     screen: FavNavigator,
     navigationOptions: {
-      tabBarLabel: 'Favorites!',
       tabBarIcon: tabInfo => {
         return <Ionicons name='ios-star' size={25} color={tabInfo.tintColor} />
       },
       tabBarColor: Colors.accentColor,
+      tabBarLabel:
+        Platform.OS === 'android' ? (
+          <Text style={{ fontFamily: 'open-sans-bold' }}>Favorites!</Text>
+        ) : (
+          'Favorites!'
+        ),
     },
   },
 }
@@ -76,7 +90,10 @@ const MealsFavTabNavigator =
         shifting: true,
       })
     : createBottomTabNavigator(mealsTabNavigationConfig, {
-        tabBarOptions: { activeTintColor: Colors.accentColor },
+        tabBarOptions: {
+          activeTintColor: Colors.accentColor,
+          labelStyle: { fontFamily: 'open-sans' },
+        },
       })
 
 const FiltersNavigator = createStackNavigator(
