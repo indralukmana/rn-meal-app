@@ -8,6 +8,10 @@ const FavoriteScreen = () => {
     </View>
   )
 }
+
+FavoriteScreen.navigationOptions = {
+  headerTitle: 'Your Favorites',
+}
 const styles = StyleSheet.create({})
 
 export default FavoriteScreen
